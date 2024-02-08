@@ -1,3 +1,8 @@
+# starts with q ends with z <6 chars long
+# words with 1 vowel
+# words with 'U' but no other vowels
+
+
 """
 [ ] What are all of the words containing UU?
 [ ] What are all of the words containing an X and a Y and a Z?
@@ -22,6 +27,8 @@ Setting up storage to use during a for loop, including counters and arrays
 """
 fn = 'sowpods.txt'
 fh = open(fn)
+
+
 # What are all of the words containing UU?
 # UU = []
 # for line in fh:
