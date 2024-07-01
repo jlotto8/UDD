@@ -1,0 +1,1 @@
+# write a function that returns true if a word has NONE of the letters in some set of letters (e.g. "GHJK") and false otherwise
