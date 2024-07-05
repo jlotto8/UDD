@@ -1,8 +1,7 @@
 class MinHeap:
 
-    def __init__(self,nodes,cmp):
+    def __init__(self,nodes):
         self.nodes = []
-
         for node in nodes: # adds each node from  the input list to the heap
             self.add(node)
     
@@ -97,9 +96,6 @@ Keep bubbling up/sifting up until reaching the root
             self.__heapify_down(smaller_child_idx)
         return self.nodes
 
-# public method to remove; takes an index as input; calls heapify down to complete it
-# consider other public methods
-# check if a value exists 
 
         """
         Removing the minimum element
