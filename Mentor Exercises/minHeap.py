@@ -85,6 +85,9 @@ Keep bubbling up/sifting up until reaching the root
         if index >= len(self.nodes) or not self.__has_left_child(index): # split these conditions; first condition make an assert statement; second condition just return if it happens
             return self.nodes  # If the index is out of bounds or has no left child, return the heap
         # Determine the index of the smaller child
+
+        
+
         smaller_child_idx = self.__get_left_child_index(index)
         if self.__has_right_child(index) and self.nodes[self.__get_right_child_index(index)] < self.nodes[smaller_child_idx]:
             smaller_child_idx = self.__get_right_child_index(index)
