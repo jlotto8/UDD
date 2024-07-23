@@ -166,6 +166,9 @@ class MaxHeap(Heap):
         # Initialize a MaxHeap with a list of nodes. param nodes: List of initial nodes to add to the heap.
         super().__init__(nodes, compare=lambda x, y: x > y)
 
+
+
+
 # Sample usage of the MinHeap and MaxHeap classes
 # initial_nodes = [3, 1, 6, 5, 9, 8]
  
