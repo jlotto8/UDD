@@ -43,7 +43,7 @@ def count_ships(grid):
     count = 0  # Initialize the ship count to 0
     
     for r in range(len(grid)): # num of rows
-        for c in range(len(grid[0])): # num of  columns
+        for c in range(len(grid[0])): # num of columns
             if grid[r][c] == "S":  # found part of a ship
                 # Check if it's the start of a new ship
                 if (r == 0 or grid[r-1][c] == ".") and (c == 0 or grid[r][c-1] == "."):
