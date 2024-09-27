@@ -46,32 +46,101 @@ encoding - computer's memory of chars is numbers
 chr - ASCII
 ord - unicode 
 """
-
 def solver(input,shift):
 
-    """
-    Part II
+    solved_str = ''
+    new_pos_upper = 0
+    new_pos_lower = 0
+    shifted_pos_upper = 0
+    shifted_pos_lower = 0
 
-    Using your `rot` function, write a function `decrypt` that takes a text encrypted using a shift substitution cipher of an unknown shift amount, and returns a tuple containing `(the shift used to encrypt the original string, the original string)`.
+    for char in input:
+        if char.isalpha():
+            if char.isupper():
+                first_pos_upper = ord(char) - ord('A')
+                new_pos_upper = (first_pos_upper + shift) % 26
+                shifted_pos_upper = chr(new_pos_upper + ord('A'))
+                solved_str += shifted_pos_upper
 
-    You will need a dictionary or word list. An input string needs to be long enough to unambiguously determine the the shift used, or there could be multiple valid shifts.
+            elif char.islower():
+                first_pos_lower = ord(char) - ord('a')
+                new_pos_lower = (first_pos_lower + shift) % 26
+                shifted_pos_lower = chr(new_pos_lower + ord('a'))
+                solved_str += shifted_pos_lower
 
-    Sample inputs and outputs:
+        else:
+            solved_str += char
 
-    decrypt("Ju xbt uif cftu pg ujnft, ju xbt uif xpstu pg ujnft") -> ("It was the best of times, it was the worst of times", 1)
+    return solved_str  
+print(solver('HELLO', 1))
 
-    def decrypt(text, shift):
-        
-        answer = tuple
-    put words in a set instead of line by line from the file
-    break out early if first or 2nd word does not match a word froom the set
-    consider proper nouns - exception/error ; match %
 
-    create a list of each shift possibility
-    check the first word
-    check each possible shift
+"""
+Part II
+
+Using your `rot` function, write a function `decrypt` that takes a text encrypted using a shift substitution cipher of an unknown shift amount, and returns a tuple containing `(the shift used to encrypt the original string, the original string)`.
+
+You will need a dictionary or word list. An input string needs to be long enough to unambiguously determine the the shift used, or there could be multiple valid shifts.
+
+Sample inputs and outputs:
+
+decrypt("Ju xbt uif cftu pg ujnft, ju xbt uif xpstu pg ujnft") -> ("It was the best of times, it was the worst of times", 1)
 
     
-    easy way - multiply by -1 to determine position
+    answer = tuple
+put words in a set instead of line by line from the file
+break out early if first or 2nd word does not match a word froom the set
+consider proper nouns - exception/error ; match %
 
-    """
+create a list of each shift possibility
+check the first word
+check each possible shift
+
+
+easy way - multiply by -1 to determine position
+
+"""
+import string
+
+filename = '../Wordplay/sowpods.txt'
+
+# def get_words(filename):
+words = set()
+with open(filename) as file:
+    # file = file.readlines()
+
+    for line in file:
+        line = line.strip()
+        # words.add(line.lower())
+        words.add(line)
+print(words)
+    # return words
+# print(get_words(sowpods_file_name))
+
+def decrypt(text):
+    max_valid_words = 0  
+    best_shift = 0  
+    decrypted_text = ''  
+
+    for shift in range(26):
+        candidate_text = solver(text, -shift) 
+        words = candidate_text.split()
+        valid_words_count = 0  
+
+        for word in words:
+            stripped_word = word.lower().strip(string.punctuation)
+            
+            if stripped_word in words:
+                valid_words_count += 1
+
+        if valid_words_count > max_valid_words:
+            max_valid_words = valid_words_count
+            best_shift = shift
+            decrypted_text = candidate_text
+
+    return decrypted_text, best_shift
+
+print(decrypt("Ju xbt uif cftu pg ujnft, ju xbt uif xpstu pg ujnft"))  
+
+# help with upper and lowercase
+# to do - break out early
