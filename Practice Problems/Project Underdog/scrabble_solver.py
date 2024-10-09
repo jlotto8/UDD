@@ -103,19 +103,13 @@ def find_scrabble_words(rack, word_list):
 
 # Main function
 def main():
-    # Prompt the user for input
     rack = input("Enter your Scrabble rack: ").upper()
     
-    # Load the word list
     word_list = load_word_list('../Wordplay/sowpods.txt')
     
     # Find valid words
     words_with_scores = find_scrabble_words(rack, word_list)
     
-    # Debugging: Print the words_with_scores list to see if anything is found
-    # print("Debug: Words with scores found:", words_with_scores)
-    
-    # Print the results
     if not words_with_scores:
         print("No valid words found.")
     else:

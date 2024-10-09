@@ -54,3 +54,69 @@ main - create grid, which will be passed into solver function; create sets
 dfs(grid,listof tuples - for each letter, next letter to visit as tuple)
 return a list of tuples
 """
+
+filename = '../Wordplay/sowpods.txt'
+
+word_set = set()
+with open(filename) as file:
+
+    for line in file:
+        line = line.strip()
+        word_set.add(line)
+
+def solver(grid, word_set):
+    found_words = set() # store words 
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            visited = set() # keep track of letters/positions visited; a set of tuples
+            dfs(grid, row, col, "", visited, word_set, found_words)
+    return found_words
+
+def dfs(grid, row, col, path, visited, word_set,found_words):
+
+    # check the position, or if it was already visited
+    if (row < 0 or row >= len(grid) or
+        col < 0 or col >= len(grid[0]) or
+        (row, col) in visited):
+        return
+
+    # add the letter to the path (word being built)
+    path += grid[row][col]
+    
+    is_prefix = False
+    for word in word_set:
+        if word.startswith(path):  # check if the current path is a valid prefix
+            is_prefix = True
+            break
+    if not is_prefix:
+        return
+    
+    # keep track of the letter/position being visited
+    visited.add((row, col))
+    
+    # if the path forms a valid word, add it to found_words
+    if path in word_set and len(path) >= 3:  # start checking at 3 letters (change this depending on rules of boggle/difficulty)
+        found_words.add(path)
+
+        # Explore all 8 possible directions (up, down, left, right, and diagonals)
+    directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+    
+    for direction in directions:
+        dr, dc = direction  # Unpack the direction tuple into row and column changes
+        new_row = row + dr  # Calculate the new row by adding the row change
+        new_col = col + dc  # Calculate the new column by adding the column change
+        dfs(grid, new_row, new_col, path, visited, word_set, found_words)
+    
+    # Unmark the cell as visited (backtracking)
+    visited.remove((row, col))
+    
+grid1 = [['B', 'E'],
+         ['T', 'Q']]
+
+grid2 = [['Z', 'Q', 'Q', 'Z'],
+         ['Z', 'A', 'E', 'Z'],
+         ['Z', 'U', 'D', 'Z'],
+         ['Z', 'Q', 'Q', 'Z']]
+
+print(solver(grid1, word_set))  
+print(solver(grid2, word_set))  

@@ -49,24 +49,15 @@ ord - unicode
 def solver(input,shift):
 
     solved_str = ''
-    new_pos_upper = 0
-    new_pos_lower = 0
-    shifted_pos_upper = 0
-    shifted_pos_lower = 0
 
     for char in input:
         if char.isalpha():
-            if char.isupper():
-                first_pos_upper = ord(char) - ord('A')
-                new_pos_upper = (first_pos_upper + shift) % 26
-                shifted_pos_upper = chr(new_pos_upper + ord('A'))
-                solved_str += shifted_pos_upper
+            letter_a = ord('A') if char.isupper() else ord('a')
 
-            elif char.islower():
-                first_pos_lower = ord(char) - ord('a')
-                new_pos_lower = (first_pos_lower + shift) % 26
-                shifted_pos_lower = chr(new_pos_lower + ord('a'))
-                solved_str += shifted_pos_lower
+            first_pos = ord(char) - letter_a
+            new_pos = (first_pos + shift) % 26
+            shifted_pos = chr(new_pos + letter_a)
+            solved_str += shifted_pos
 
         else:
             solved_str += char
@@ -105,15 +96,15 @@ import string
 filename = '../Wordplay/sowpods.txt'
 
 # def get_words(filename):
-words = set()
+word_set = set()
 with open(filename) as file:
     # file = file.readlines()
 
     for line in file:
         line = line.strip()
         # words.add(line.lower())
-        words.add(line)
-print(words)
+        word_set.add(line)
+# print(words)
     # return words
 # print(get_words(sowpods_file_name))
 
@@ -123,14 +114,14 @@ def decrypt(text):
     decrypted_text = ''  
 
     for shift in range(26):
-        candidate_text = solver(text, -shift) 
+        candidate_text = solver(text, -shift)
         words = candidate_text.split()
         valid_words_count = 0  
 
         for word in words:
-            stripped_word = word.lower().strip(string.punctuation)
+            stripped_word = word.upper().strip(string.punctuation)
             
-            if stripped_word in words:
+            if stripped_word in word_set:
                 valid_words_count += 1
 
         if valid_words_count > max_valid_words:
@@ -140,7 +131,18 @@ def decrypt(text):
 
     return decrypted_text, best_shift
 
-print(decrypt("Ju xbt uif cftu pg ujnft, ju xbt uif xpstu pg ujnft"))  
+# print(decrypt("Ju xbt uif cftu pg ujnft, ju xbt uif xpstu pg ujnft"))  
 
 # help with upper and lowercase
 # to do - break out early
+
+"""
+count wrds in input
+if the valid words = count in input
+break out
+
+address proper nouns
+
+ascii vs unicode
+1 letter chars
+"""
